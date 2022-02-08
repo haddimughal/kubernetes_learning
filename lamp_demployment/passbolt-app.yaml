@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: passbolt
+  labels:
+          app: passbolt
+spec:
+  selector:
+    matchLabels:
+      run: passbolt
+      app: passbolt
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: passbolt
+        app: passbolt
+    spec:
+      containers:
+        - name: passbolt
+          image: passbolt/passbolt
+          command: ["sleep", "123456"]
+          ports:
+                  - containerPort: 80

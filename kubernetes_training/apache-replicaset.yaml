@@ -1,0 +1,23 @@
+apiVersion: apps/v1      # see https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/
+kind: ReplicaSet           # type of object that's defined in this file
+metadata:
+  name: apache-server   # the name displayed in the first column of 'kubectl get pods'
+  labels:
+    app: apache-server  # this tag is added to help this object to link to the service object.
+    tier: apache-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:      # name of the container that will reside in the pod
+      tier: apache-server
+  template:
+    metadata:
+            labels:
+                    tier: apache-server      
+    spec:
+      containers:
+        - name: apache-server
+          image: httpd:latest
+          ports:                # this bit is purely for informational purposes only and can be omitted.
+          - containerPort: 80   # what port the container will be listening on
+

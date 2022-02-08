@@ -1,0 +1,26 @@
+apiVersion: v1 
+
+kind: PersistentVolume 
+
+metadata: 
+
+  name: data-mysql-0
+
+  labels:
+          app: mysql
+
+spec: 
+
+  storageClassName: manual 
+
+  capacity: 
+
+   storage: 6Gi 
+
+  accessModes: 
+
+    - ReadWriteOnce 
+
+  hostPath: 
+
+    path: "/var/lib/mysql" #Create volume on node at this path 

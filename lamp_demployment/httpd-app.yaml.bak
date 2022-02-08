@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd
+  labels:
+          app: httpd
+spec:
+  selector:
+    matchLabels:
+      run: httpd
+      app: httpd
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: httpd
+        app: httpd
+    spec:
+      containers:
+        - name: httpd
+          image: httpd:latest
+          #command: ["sleep", "123456"]
+          ports:
+                  - containerPort: 80

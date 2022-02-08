@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd
+  labels:
+          run: httpd
+spec:
+  type: NodePort
+  selector:
+    app: httpd
+    run: httpd
+  ports:
+      # By default and for convenience, the `targetPort` is set to the same value as the `port` field.
+    - port: 80
+      targetPort: 80
+      nodePort: 30000
+      protocol: TCP
+      name: defalut-apache
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30100
+      protocol: TCP
+      name: php-myadmin
