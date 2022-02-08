@@ -1,0 +1,18 @@
+CI/CD pipeline of node application using jenkins, ansible, docker, helmchart, github, dockerhub.
+
+Overview:
+- Jenkins will be used to trigger ansible playbooks and handling all credentials and emailing.
+- Ansible playbook will deploy docker container for staging server and helmchart for production kubernetes cluster.
+- We will use private github and dockerhub repositories.
+
+Workflow:
+- Developer will push code in private github repository.
+- On successfull push github will auto trigger jenkins pipeline.
+- We will create a pipeline with "build with parameters" and "Trigger builds remotely" options and by default 'staging' will be set as parameter along with 'access-token' as authentication token.
+- Jenkins will first clone git repo in local server and get jenkinsfile from there and will trigger staging ansible playbook as parameter is by default staging.
+- Ansible will start execution of playbook on staging server where git will be cloned on that server and dockerfile will be used to create new image and upload it to private dockerhub repository. Container will be created with new image which will serve requests on port 3000. If already container is running it will be recreated.
+- Jenkins will trigger an email to admin for build results. There will be a url link in email which will be pressed if admin want to deploy the same code on production kubernetes cluster using helm chart.
+- If admin click on url then jenkins login page will be opened in browser where admin will provide credentials for authentication. If credentials are right then a blank page will be shown it means production ansible playbook have been triggered from jenkins.
+- In production git will be cloned. Then helm chart will be installed on cluster using bash commands. If chart already exists it will be upgraded.
+- Helm chart will download the latest image from dockerhub private repository and deploy the complete deployment.
+- After completion jenkins will send email to admin with console logs attached.
